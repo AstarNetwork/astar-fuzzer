@@ -1,6 +1,6 @@
 # Astar Fuzzer
 
-A fuzzing framework for the Astar runtime using structured input generation.
+A fuzzing framework for Astar using structured input generation.
 
 ## Usage
 
