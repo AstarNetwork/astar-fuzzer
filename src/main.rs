@@ -323,15 +323,6 @@ fn initialize_block(block: u32, prev_header: Option<&RelayHeader>) {
             ..Default::default()
         };
 
-        /*
-        let mut sproof_builder = RelayStateSproofBuilder::default();
-        sproof_builder.para_id = ParachainInfo::get();
-        sproof_builder.included_para_head = Some(parent_head.clone());
-        sproof_builder.current_slot =
-            cumulus_primitives_core::relay_chain::Slot::from(2 * u64::from(block));
-
-         */
-
         let (relay_storage_root, proof) = sproof_builder.into_state_root_and_proof();
 
         cumulus_pallet_parachain_system::Call::set_validation_data {
