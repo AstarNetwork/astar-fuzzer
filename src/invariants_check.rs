@@ -1,0 +1,57 @@
+use astar_primitives::Balance;
+use astar_runtime::{AllPalletsWithSystem, Balances, Runtime};
+use frame_support::traits::{IntegrityTest, TryState, TryStateSelect};
+use frame_system::Account;
+use pallet_balances::{Holds, TotalIssuance};
+use pallet_dapp_staking::Ledger;
+
+pub fn check_invariants(block: u32, _initial_total_issuance: Balance) {
+    for (account, info) in Account::<Runtime>::iter() {
+        let consumers = info.consumers;
+        let providers = info.providers;
+        assert!(!(consumers > 0 && providers == 0), "Invalid c/p state");
+        let max_lock: Balance = Balances::locks(&account)
+            .iter()
+            .map(|l| l.amount)
+            .max()
+            .unwrap_or_default();
+        assert_eq!(
+            max_lock, info.data.frozen,
+            "Max lock should be equal to frozen balance"
+        );
+        let sum_holds: Balance = Holds::<Runtime>::get(&account)
+            .iter()
+            .map(|l| l.amount)
+            .sum();
+        assert!(
+            sum_holds <= info.data.reserved,
+            "Sum of all holds ({sum_holds}) should be less than or equal to reserved balance {}",
+            info.data.reserved
+        );
+    }
+
+    check_dapp_staking_invariants();
+
+    AllPalletsWithSystem::integrity_test();
+    AllPalletsWithSystem::try_state(block, TryStateSelect::All).unwrap();
+}
+
+fn check_dapp_staking_invariants() {
+    use pallet_dapp_staking::{CurrentEraInfo, StakerInfo};
+
+    // Check that total staked doesn't exceed total issuance
+    let current_era_info = CurrentEraInfo::<Runtime>::get();
+    let total_staked = current_era_info.total_staked_amount();
+    let total_issuance = TotalIssuance::<Runtime>::get();
+
+    assert!(total_staked <= total_issuance);
+
+    // Verify staker info consistency
+    let mut counted_individual_stakes = 0;
+    for (staker, _smart_contract, staker_info) in StakerInfo::<Runtime>::iter() {
+        counted_individual_stakes += staker_info.total_staked_amount();
+        assert!(Ledger::<Runtime>::contains_key(&staker));
+    }
+
+    assert!(counted_individual_stakes <= total_staked);
+}
