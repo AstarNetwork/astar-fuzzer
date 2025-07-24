@@ -1,0 +1,23 @@
+services:
+  fuzzer:
+    image: astar-fuzzer-dev
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./src:/app/src
+      - ./Cargo.toml:/app/Cargo.toml
+      - ./Cargo.lock:/app/Cargo.lock
+      - ./Makefile:/app/Makefile
+      - fuzzer-target:/app/target
+      - fuzzer-output:/app/output
+    security_opt:
+      - seccomp:unconfined
+    working_dir: /app
+    command: bash
+    stdin_open: true
+    tty: true
+
+volumes:
+  fuzzer-target:
+  fuzzer-output:

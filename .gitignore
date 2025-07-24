@@ -1,0 +1,10 @@
+/target
+/Cargo.lock
+*.pdb
+.DS_Store
+/data/*.bin
+/data/*.snapshot
+memory_map.output
+/idea
+*.iml
+*.xml
