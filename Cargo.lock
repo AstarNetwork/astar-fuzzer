@@ -256,7 +256,7 @@ checksum = "9b34d609dfbaf33d6889b2b7106d3ca345eacad44200913df5ba02bfd31d2ba9"
 [[package]]
 name = "assets-chain-extension-types"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "num_enum 0.5.11",
  "parity-scale-codec",
@@ -277,6 +277,7 @@ dependencies = [
  "fp-evm",
  "frame-support",
  "frame-system",
+ "log",
  "pallet-balances",
  "pallet-collective",
  "pallet-contracts",
@@ -284,8 +285,10 @@ dependencies = [
  "pallet-multisig",
  "pallet-proxy",
  "pallet-timestamp",
+ "pallet-treasury 37.0.0",
  "pallet-utility",
  "parity-scale-codec",
+ "serde_json",
  "sp-consensus-aura",
  "sp-consensus-babe",
  "sp-core",
@@ -297,7 +300,7 @@ dependencies = [
 [[package]]
 name = "astar-primitives"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "ethereum",
  "ethereum-types",
@@ -332,7 +335,7 @@ dependencies = [
 [[package]]
 name = "astar-runtime"
 version = "16.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "array-bytes",
  "astar-primitives",
@@ -437,7 +440,6 @@ dependencies = [
  "sp-std",
  "sp-transaction-pool",
  "sp-version",
- "sp-weights",
  "staging-parachain-info",
  "staging-xcm",
  "staging-xcm-builder",
@@ -449,7 +451,7 @@ dependencies = [
 [[package]]
 name = "astar-xcm-benchmarks"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "frame-benchmarking",
@@ -1196,7 +1198,7 @@ dependencies = [
 [[package]]
 name = "dapp-staking-runtime-api"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "sp-api",
@@ -1602,7 +1604,7 @@ dependencies = [
 [[package]]
 name = "evm-tracing-events"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "environmental",
  "ethereum",
@@ -2718,7 +2720,7 @@ dependencies = [
 [[package]]
 name = "moonbeam-evm-tracer"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "ethereum-types",
  "evm",
@@ -2738,7 +2740,7 @@ dependencies = [
 [[package]]
 name = "moonbeam-primitives-ext"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "ethereum-types",
  "evm-tracing-events",
@@ -2751,7 +2753,7 @@ dependencies = [
 [[package]]
 name = "moonbeam-rpc-primitives-debug"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "environmental",
  "ethereum",
@@ -2769,7 +2771,7 @@ dependencies = [
 [[package]]
 name = "moonbeam-rpc-primitives-txpool"
 version = "0.6.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "ethereum",
  "parity-scale-codec",
@@ -3263,7 +3265,7 @@ dependencies = [
 [[package]]
 name = "pallet-chain-extension-assets"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "assets-chain-extension-types",
  "frame-support",
@@ -3282,7 +3284,7 @@ dependencies = [
 [[package]]
 name = "pallet-collator-selection"
 version = "3.3.2"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -3338,7 +3340,7 @@ dependencies = [
 [[package]]
 name = "pallet-collective-proxy"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "frame-benchmarking",
@@ -3411,7 +3413,7 @@ dependencies = [
 [[package]]
 name = "pallet-dapp-staking"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "frame-benchmarking",
@@ -3449,7 +3451,7 @@ dependencies = [
 [[package]]
 name = "pallet-dynamic-evm-base-fee"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "fp-evm",
  "frame-benchmarking",
@@ -3547,7 +3549,7 @@ dependencies = [
 [[package]]
 name = "pallet-evm-precompile-assets-erc20"
 version = "0.5.2"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "fp-evm",
  "frame-support",
@@ -3587,7 +3589,7 @@ dependencies = [
 [[package]]
 name = "pallet-evm-precompile-dapp-staking"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "fp-evm",
@@ -3620,7 +3622,7 @@ dependencies = [
 [[package]]
 name = "pallet-evm-precompile-dispatch-lockdrop"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "fp-evm",
  "frame-support",
@@ -3678,7 +3680,7 @@ dependencies = [
 [[package]]
 name = "pallet-evm-precompile-sr25519"
 version = "1.2.1"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "fp-evm",
  "log",
@@ -3694,7 +3696,7 @@ dependencies = [
 [[package]]
 name = "pallet-evm-precompile-substrate-ecdsa"
 version = "1.2.2"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "assert_matches",
  "fp-evm",
@@ -3711,7 +3713,7 @@ dependencies = [
 [[package]]
 name = "pallet-evm-precompile-xcm"
 version = "0.11.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "fp-evm",
@@ -3773,7 +3775,7 @@ dependencies = [
 [[package]]
 name = "pallet-inflation"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "frame-benchmarking",
@@ -3887,7 +3889,7 @@ dependencies = [
 [[package]]
 name = "pallet-price-aggregator"
 version = "0.1.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "astar-primitives",
  "frame-benchmarking",
@@ -4046,7 +4048,7 @@ dependencies = [
 [[package]]
 name = "pallet-treasury"
 version = "37.0.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "docify",
  "frame-benchmarking",
@@ -4112,7 +4114,7 @@ dependencies = [
 [[package]]
 name = "pallet-xc-asset-config"
 version = "1.3.0"
-source = "git+https://github.com/AstarNetwork/Astar?branch=master#f11225ca1be70a4c41c464747de4f1c4e3683df9"
+source = "git+https://github.com/AstarNetwork/Astar?tag=runtime-1601#7e6b55cb28b4f501037e11a888f4bc9dd6c21f76"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -4403,6 +4405,7 @@ dependencies = [
  "log",
  "pallet-asset-rate",
  "pallet-authorship",
+ "pallet-babe",
  "pallet-balances",
  "pallet-broker",
  "pallet-election-provider-multi-phase",

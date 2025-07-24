@@ -1,9 +1,9 @@
 # Makefile
 .PHONY: fuzz fuzz-parallel build triage clean
 
-# Default fuzzing (single job)
+# Default fuzzing (single job - easy for debugging)
 fuzz:
-	SKIP_WASM_BUILD=1 cargo ziggy fuzz
+	SKIP_WASM_BUILD=1 RUST_LOG=debug cargo ziggy fuzz
 
 # Parallel fuzzing (20 jobs, 30s timeout)
 fuzz-parallel:
