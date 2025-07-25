@@ -3,17 +3,16 @@ use astar_primitives::evm::H256;
 use astar_primitives::genesis::GenesisAccount;
 use astar_primitives::AccountId;
 use astar_runtime::{
-    Executive, ParachainInfo, Runtime, RuntimeCall, RuntimeOrigin, UncheckedExtrinsic,
-    SLOT_DURATION,
+    Executive, ParachainInfo, Runtime, RuntimeBlockWeights, RuntimeCall, RuntimeOrigin,
+    UncheckedExtrinsic, SLOT_DURATION,
 };
 use codec::{DecodeLimit, Encode};
 use cumulus_primitives_core::relay_chain::Header as RelayHeader;
 use cumulus_primitives_core::relay_chain::{HeadData, Slot};
 use cumulus_primitives_core::Weight;
 use cumulus_test_relay_sproof_builder::RelayStateSproofBuilder;
-use frame_support::dispatch::GetDispatchInfo;
+use frame_support::dispatch::{DispatchClass, GetDispatchInfo};
 use frame_support::traits::Get;
-use frame_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND;
 use frame_system::Account;
 use pallet_balances::TotalIssuance;
 use sp_consensus_aura::AURA_ENGINE_ID;
@@ -25,6 +24,7 @@ use sp_state_machine::BasicExternalities;
 use std::iter;
 use std::time::{Duration, Instant};
 
+/// Processing fuzzer: executing extrinsics in blocks.
 pub fn process_input(accounts: &[GenesisAccount<Public>], genesis: &Storage, data: &[u8]) {
     let mut extrinsic_data = data;
 
@@ -58,7 +58,13 @@ pub fn process_input(accounts: &[GenesisAccount<Public>], genesis: &Storage, dat
             }
 
             weight.saturating_accrue(extrinsic.get_dispatch_info().call_weight);
-            if weight.ref_time() >= 2 * WEIGHT_REF_TIME_PER_SECOND {
+            if weight.ref_time()
+                >= RuntimeBlockWeights::get()
+                    .get(DispatchClass::Normal)
+                    .max_extrinsic
+                    .unwrap()
+                    .ref_time()
+            {
                 log::debug!("Skipping because of max weight {weight}");
                 continue;
             }
@@ -88,6 +94,7 @@ pub fn process_input(accounts: &[GenesisAccount<Public>], genesis: &Storage, dat
     });
 }
 
+/// Initializes a new block.
 fn initialize_block(block: u32, prev_header: Option<&RelayHeader>) {
     log::debug!("initializing block: {block}");
 
@@ -150,6 +157,7 @@ fn initialize_block(block: u32, prev_header: Option<&RelayHeader>) {
     .unwrap();
 }
 
+/// Finalizes the current block and returns its header.
 fn finalize_block(elapsed: Duration) -> RelayHeader {
     log::debug!("time spent: {elapsed:?}");
 
@@ -159,6 +167,7 @@ fn finalize_block(elapsed: Duration) -> RelayHeader {
     Executive::finalize_block()
 }
 
+/// Recursively find call types within nested runtime calls.
 fn recursively_find_call(call: RuntimeCall, matches_on: fn(&RuntimeCall) -> bool) -> bool {
     if let RuntimeCall::Utility(
         pallet_utility::Call::batch { calls }
@@ -187,6 +196,7 @@ fn recursively_find_call(call: RuntimeCall, matches_on: fn(&RuntimeCall) -> bool
     false
 }
 
+/// Filters out slow calls to avoid fuzzer timeouts.
 fn call_filter(call: &RuntimeCall) -> bool {
     // We filter out contracts call that will take too long because of fuzzer instrumentation
     matches!(

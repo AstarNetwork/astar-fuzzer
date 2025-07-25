@@ -5,12 +5,14 @@ use sp_core::sr25519::Public;
 use sp_core::storage::Storage;
 use sp_runtime::BuildStorage;
 
+/// Creates genesis storage state.
 pub fn generate_genesis() -> Storage {
     let genesis_json = genesis_config::default_config(ASTAR_ID);
     let genesis_config: RuntimeGenesisConfig = serde_json::from_value(genesis_json).unwrap();
     genesis_config.build_storage().unwrap()
 }
 
+/// Returns test accounts for fuzzing.
 pub fn accounts() -> Vec<GenesisAccount<Public>> {
     let alice = GenesisAccount::<Public>::from_seed("Alice");
     let bob = GenesisAccount::<Public>::from_seed("Bob");

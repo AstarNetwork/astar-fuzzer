@@ -5,6 +5,8 @@ use frame_system::Account;
 use pallet_balances::{Holds, TotalIssuance};
 use pallet_dapp_staking::Ledger;
 
+/// Validates runtime invariants after every block finalization.
+/// Use Runtime Hooks (integrity_test and try_state) that are run on critical state pallets
 pub fn check_invariants(block: u32, _initial_total_issuance: Balance) {
     for (account, info) in Account::<Runtime>::iter() {
         let consumers = info.consumers;
@@ -36,6 +38,7 @@ pub fn check_invariants(block: u32, _initial_total_issuance: Balance) {
     AllPalletsWithSystem::try_state(block, TryStateSelect::All).unwrap();
 }
 
+/// Verifies some dapp staking invariants.
 fn check_dapp_staking_invariants() {
     use pallet_dapp_staking::{CurrentEraInfo, StakerInfo};
 
