@@ -6,6 +6,8 @@ use crate::process_input::process_input;
 
 /// Entry point for the fuzzer, runs fuzzing on random input data.
 fn main() {
+    env_logger::init();
+
     let genesis = utils::generate_genesis();
     let accounts = utils::accounts();
     ziggy::fuzz!(|data: &[u8]| {

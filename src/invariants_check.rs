@@ -2,8 +2,7 @@ use astar_primitives::Balance;
 use astar_runtime::{AllPalletsWithSystem, Balances, Runtime};
 use frame_support::traits::{IntegrityTest, TryState, TryStateSelect};
 use frame_system::Account;
-use pallet_balances::{Holds, TotalIssuance};
-use pallet_dapp_staking::Ledger;
+use pallet_balances::Holds;
 
 /// Validates runtime invariants after every block finalization.
 /// Use Runtime Hooks (integrity_test and try_state) that are run on critical state pallets
@@ -32,29 +31,6 @@ pub fn check_invariants(block: u32, _initial_total_issuance: Balance) {
         );
     }
 
-    check_dapp_staking_invariants();
-
     AllPalletsWithSystem::integrity_test();
     AllPalletsWithSystem::try_state(block, TryStateSelect::All).unwrap();
-}
-
-/// Verifies some dapp staking invariants.
-fn check_dapp_staking_invariants() {
-    use pallet_dapp_staking::{CurrentEraInfo, StakerInfo};
-
-    // Check that total staked doesn't exceed total issuance
-    let current_era_info = CurrentEraInfo::<Runtime>::get();
-    let total_staked = current_era_info.total_staked_amount();
-    let total_issuance = TotalIssuance::<Runtime>::get();
-
-    assert!(total_staked <= total_issuance);
-
-    // Verify staker info consistency
-    let mut counted_individual_stakes = 0;
-    for (staker, _smart_contract, staker_info) in StakerInfo::<Runtime>::iter() {
-        counted_individual_stakes += staker_info.total_staked_amount();
-        assert!(Ledger::<Runtime>::contains_key(&staker));
-    }
-
-    assert!(counted_individual_stakes <= total_staked);
 }

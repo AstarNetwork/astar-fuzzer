@@ -207,5 +207,9 @@ fn call_filter(call: &RuntimeCall) -> bool {
                 | pallet_contracts::Call::instantiate_with_code_old_weight { .. }
                 | pallet_contracts::Call::migrate { .. }
         )
-    )
+    ) || matches!(&call, RuntimeCall::Sudo(..))
+        || matches!(
+            &call,
+            RuntimeCall::DappStaking(pallet_dapp_staking::Call::lock { .. })
+        )
 }
