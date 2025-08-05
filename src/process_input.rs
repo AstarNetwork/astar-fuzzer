@@ -207,9 +207,23 @@ fn call_filter(call: &RuntimeCall) -> bool {
                 | pallet_contracts::Call::instantiate_with_code_old_weight { .. }
                 | pallet_contracts::Call::migrate { .. }
         )
-    ) || matches!(&call, RuntimeCall::Sudo(..))
-        || matches!(
-            &call,
-            RuntimeCall::DappStaking(pallet_dapp_staking::Call::lock { .. })
+       // Filter calls that use root to manipulate storage (and breaks invariant checks)
+    ) || matches!(
+        &call,
+        RuntimeCall::System(
+            frame_system::Call::set_code { .. }
+                | frame_system::Call::set_code_without_checks { .. }
+                | frame_system::Call::set_heap_pages { .. }
+                | frame_system::Call::set_storage { .. }
+                | frame_system::Call::kill_storage { .. }
+                | frame_system::Call::kill_prefix { .. }
+                | frame_system::Call::authorize_upgrade { .. }
+                | frame_system::Call::authorize_upgrade_without_checks { .. }
         )
+    )
+        // Filter `lock` as it freezes the balance but do not lock it
+        || matches!(
+        &call,
+        RuntimeCall::DappStaking(pallet_dapp_staking::Call::lock { .. })
+    )
 }
