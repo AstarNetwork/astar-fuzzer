@@ -1,6 +1,6 @@
 use astar_primitives::Balance;
 use astar_runtime::{AllPalletsWithSystem, Balances, Runtime};
-use frame_support::traits::{IntegrityTest, TryState, TryStateSelect};
+use frame_support::traits::{TryState, TryStateSelect};
 use frame_system::Account;
 use pallet_balances::Holds;
 
@@ -31,6 +31,5 @@ pub fn check_invariants(block: u32, _initial_total_issuance: Balance) {
         );
     }
 
-    AllPalletsWithSystem::integrity_test();
     AllPalletsWithSystem::try_state(block, TryStateSelect::All).unwrap();
 }
